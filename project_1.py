@@ -27,19 +27,19 @@ class Node:
 #parent class
 class Search_Alg:
     goal_state = [1, 2, 3, 4, 5, 6, 7, 8, 0]
-    default_puzzle = [2, 3, 5, 4, 1, 8, 6, 0, 7]
+    default_puzzle = [1, 5, 0, 8, 3, 6, 4, 2, 7]
 
     def __init__(self) -> None:
         pass
 
     #prints the board
-    def print_board(curr_state):
+    def print_board(self, curr_state):
         print(curr_state[0], curr_state[1], curr_state[2])
         print(curr_state[3], curr_state[4], curr_state[5])
         print(curr_state[6], curr_state[7], curr_state[8])
 
-    def move_up(curr_state):
-        new_state = curr_state
+    def move_up(self, curr_state):
+        new_state = curr_state.copy()
         index = new_state.index(0)
         #check if the index of the empty space is at the top of the board
         if index not in [0, 1, 2]:
@@ -53,8 +53,8 @@ class Search_Alg:
         else: #if tile is on the top row, return an error
             return None
         
-    def move_down(curr_state):
-        new_state = curr_state
+    def move_down(self, curr_state):
+        new_state = curr_state.copy()
         index = new_state.index(0)
         if index not in [6, 7, 8]:
             temp = new_state[index + 3]
@@ -64,8 +64,8 @@ class Search_Alg:
         else:
             return None
         
-    def move_right(curr_state):
-        new_state = curr_state
+    def move_right(self, curr_state):
+        new_state = curr_state.copy()
         index = new_state.index(0)
         if index not in [2, 5, 8]:
             temp = new_state[index + 1]
@@ -75,8 +75,8 @@ class Search_Alg:
         else:
             return None
         
-    def move_left(curr_state):
-        new_state = curr_state
+    def move_left(self, curr_state):
+        new_state = curr_state.copy()
         index = new_state.index(0)
         if index not in [0, 3, 6]:
             temp = new_state[index - 1]
@@ -85,6 +85,23 @@ class Search_Alg:
             return new_state
         else:
             return None
+        
+    def trace(self, node):
+        path = []
+
+        while node.parent != None:
+            #path.append(node.operator)
+            path.append(node)
+            #self.print_board(node.state)
+            node = node.parent
+        path.reverse()
+
+        for i in range(len(path)):
+            print(path[i].operator)
+            self.print_board(path[i].state)
+
+        print("Total moves: ", len(path))
+
     
     def make_node(self, state, parent, operator, depth, cost):
         return Node(state, parent, operator, depth, cost)
@@ -107,14 +124,19 @@ class Search_Alg:
         node4 = self.move_right(input_node.state)
         if(node4 != None):
             options.append(self.make_node(node4, input_node, "move blank space right", input_node.depth + 1, 0))
-            
+
+        return options
 
 #Uniform Cost Search
 class Uniform_Cost(Search_Alg):
     #sorts the nodes in the frontier by their depth
     def ascending_sort(self, frontier):
-        new_frontier = frontier.sort(key =lambda x: x.depth)
-        return new_frontier
+        if not frontier:
+            return []
+        else:
+            new_frontier = sorted(frontier, key =lambda x: x.depth)
+            if not new_frontier: print("empty")
+            return new_frontier
 
     def check_queue_size(self, current_size, queue_size):
         if current_size < queue_size:
@@ -130,12 +152,15 @@ class Uniform_Cost(Search_Alg):
         expanded_count = 0
         max_in_queue = 0
         while True:
+            print(expanded_count)
+            if expanded_count > 25: return None
             #if empty and no solution return failure
             if not fringe: return None
             #pick node with lowest cost of action
             fringe = self.ascending_sort(fringe)
             max_in_queue = self.check_queue_size(max_in_queue, len(fringe))
             current_node = fringe.pop(0)
+            self.print_board(current_node.state)
             #if it's the goal state, return a success
             if current_node.state == self.goal_state : return [current_node, expanded_count, max_in_queue]
             #otherwise, explore your options at that node
@@ -145,16 +170,16 @@ class Uniform_Cost(Search_Alg):
             #add its children to the frontier
             for node in expanded_nodes:
                 #if we haven't seen this child yet, add to fringe
-                if node not in expanded_nodes:
+                if node not in explored and node not in fringe:
                     fringe.append(node)
                 #otherwise, see if we've seen this child but at a higher cost
-                elif fringe.index(node).depth < node.depth :
+                elif node in fringe and (fringe.index(node)).depth < node.depth :
                     #replace node with it's lower cost route
                     fringe[fringe.index(node)] = node
 
 puzzle = Uniform_Cost()
 solution = puzzle.run(puzzle.default_puzzle)
-if solution != None:
+if solution:
     print("Nodes expanded: ", solution[1])
     print("Max in queue: ", solution[2])
 
