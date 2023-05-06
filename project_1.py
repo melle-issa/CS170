@@ -17,7 +17,7 @@
 # 7 8 0
 
 #Node class
-
+from math import sqrt
 
 class Node:
     def __init__(self, state, parent, operation, depth, cost):
@@ -254,6 +254,14 @@ class A_EuclideanDist(Search_Alg):
 # else:
 #     print("No solution found.")
 
+
+puzzleE = A_EuclideanDist()
+puzzleE.print_board(puzzleE.default_puzzle)
+solutionE=puzzleE.run(puzzleE.default_puzzle)
+if solutionE is not None:
+    puzzleE.trace(solutionE)
+else:
+    print("No solution found")
 
 #puzzle = Uniform_Cost()
 #solution = puzzle.run(puzzle.default_puzzle)
