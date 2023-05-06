@@ -3,7 +3,7 @@
 #Student IDs:
 #Ailan Hernandez: 86
 #Melissa Hidalgo: 862211556
-#Lucyann Lacdan: 
+#Lucyann Lacdan: 862132856
 #Malina Martinez: 
 #
 #Operations;
@@ -212,14 +212,47 @@ class A_Misplaced(Search_Alg):
                         
         return None
 
+# A* with Euclidean Distance Heuristic
+class A_EuclideanDist(Search_Alg):
+    def getHeuristic(self, node):
+        heuristic = 0
+        for i in range(len(node.state)):
+            #distance formula
+            distance = sqrt((node.state[0] - Search_Alg.goal_state[0])** 2 + (node.state[1] - Search_Alg.goal_state[1])** 2)
+            heuristic += distance
+        return heuristic
+    
+    def run(self, start_state):
+        root_node = self.make_node(start_state, None, None, 0, 0)
+        queue = []
+        queue.append(root_node)
 
-puzzleM = A_Misplaced()
-puzzleM.print_board(puzzleM.default_puzzle)
-solutionM=puzzleM.run(puzzleM.default_puzzle)
-if solutionM is not None:
-    puzzleM.trace(solutionM)
-else:
-    print("No solution found.")
+        while queue:
+            minPos = 0
+            for i in range(len(queue)):
+                queue[i].totalCost = self.getHeuristic(queue[i]) + queue[i].depth
+                if(queue[i].totalCost < queue[minPos].totalCost):
+                    minPos = i
+            currNode = queue.pop(minPos)
+          
+            
+            if (currNode.state == self.goal_state):
+                return currNode
+            else:
+                expandedOptions = self.expand_node(currNode)
+                for option in expandedOptions:
+                    if(option.state != currNode.state):
+                        queue.append(option)
+                 
+        return None
+
+# puzzleM = A_Misplaced()
+# puzzleM.print_board(puzzleM.default_puzzle)
+# solutionM=puzzleM.run(puzzleM.default_puzzle)
+# if solutionM is not None:
+#     puzzleM.trace(solutionM)
+# else:
+#     print("No solution found.")
 
 
 #puzzle = Uniform_Cost()
