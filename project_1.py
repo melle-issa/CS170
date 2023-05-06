@@ -1,5 +1,3 @@
-
-
 #Student IDs:
 #Ailan Hernandez: 86
 #Melissa Hidalgo: 862211556
