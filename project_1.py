@@ -218,8 +218,9 @@ class A_EuclideanDist(Search_Alg):
         heuristic = 0
         for i in range(len(node.state)):
             #distance formula
-            distance = sqrt((node.state[0] - Search_Alg.goal_state[0])** 2 + (node.state[1] - Search_Alg.goal_state[1])** 2)
-            heuristic += distance
+            if node.state[i] != 0:
+                distance = sqrt((node.state[i] % 3 - Search_Alg.goal_state[i] % 3)**2 + (node.state[i] // 3 - Search_Alg.goal_state[i] // 3)**2)
+                heuristic += distance
         return heuristic
     
     def run(self, start_state):
