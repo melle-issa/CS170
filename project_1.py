@@ -247,7 +247,6 @@ class A_EuclideanDist(Search_Alg):
                         queue.append(option)
                  
         return None
-    
 
 print("Welcome to our 8 puzzle solver!")
 print("1. Use default puzzle")
