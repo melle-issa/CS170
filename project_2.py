@@ -78,6 +78,10 @@ def backward_selection(data):
         currFeatures.pop(lowestAccuracyPos)
         print("\nFeature set "+str(currFeatures)+" was the worst, accuracy is "+str(lowestAccuracy)+"%")
 
+        if highestAccuracy > accuracy:
+            print("(Warning. Accuracy has decreased!)")
+
+
     print("\nFinished search!! The best subset is "+str(bestFeatures)+", which has an accuracy of "+str(highestAccuracy)+"%")
     
 
