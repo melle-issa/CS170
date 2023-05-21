@@ -15,26 +15,39 @@ def leave_one_out_cross_validation(data, current_features, feature_to_add):
     rand = round(random.uniform(0, 100), 2)
     return rand
 
-def forward_selection(data):
-    print("Beginning search")
+def forward_selection(num_features, data):
+    print("\nBeginning search\n")
     features = []
+    best_accuracy = leave_one_out_cross_validation(data, features, 0)
+    final_features = []
+
+    print("Using no features and \"random\" evaluation, we get an accuracy of ", best_accuracy, "%\n")
+
     without_labels = data.drop(columns=['label'])
-    for i in range(len(without_labels.columns) - 1):
+    for i in range(num_features):
         best_feature = None
-        best_accuracy = 0.0
-        for k in without_labels.columns[:-1]:
+        best_accuracy_in_loop = 0.0
+        for k in without_labels.columns:
             if k not in features:
                 features.append(k)
                 accuracy = leave_one_out_cross_validation(data, features, k)
-                print("Using feature(s) ", features, " accuracy is ", accuracy, "%")
+                print(" Using feature(s) ", str(features), " accuracy is ", accuracy, "%")
                 features.remove(k)
 
-                if accuracy > best_accuracy:
-                    best_accuracy = accuracy
+                if accuracy > best_accuracy_in_loop:
+                    best_accuracy_in_loop = accuracy
                     best_feature = k
 
         features.append(best_feature)
-        print("Feature set ", features, " was best with an accuracy of ", best_accuracy, "%")
+
+        print("\nFeature set ", str(features), " was best with an accuracy of ", best_accuracy_in_loop, "%")
+        if best_accuracy_in_loop > best_accuracy:
+                    best_accuracy = best_accuracy_in_loop
+                    final_features = features.copy()
+        elif best_accuracy_in_loop < best_accuracy:
+            print("(Warning. Accuracy has decreased!)")
+
+    print("\nFinished search!! The best subset is ", str(final_features), ", which has an accuracy of ", best_accuracy, "%")
 
 def backward_selection(data):
     print("Beginning search")
@@ -72,14 +85,14 @@ def backward_selection(data):
 data = pd.read_csv('data.txt', delimiter=' ', header=None) #this somehow still works with txt files lol
 data = data.rename(columns={0: "label"})
 
-print("Welcome to our Feature Selection Algorithm!")
+print("Welcome to our Feature Selection Algorithm!\n")
 inp = input("Please enter the total number of features: ")
-print("1. Forward Selection")
+print("\n1. Forward Selection")
 print("2. Backward Selection")
-algorithm_selection = input("Please select an algorithm to run: ")
+algorithm_selection = input("\nPlease select an algorithm to run: ")
 
 if algorithm_selection == "1":
-    forward_selection(data)
+    forward_selection(int(inp), data)
 
 else:
     #backward_selection(data)
