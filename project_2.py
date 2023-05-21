@@ -38,8 +38,35 @@ def forward_selection(data):
 
 def backward_selection(data):
     print("Beginning search")
-    features = []
-    without_labels = data.drop(data["label"])
+    currFeatures = []
+    for i in range(data):
+        currFeatures.append(i+1)
+
+    accuracy=leave_one_out_cross_validation(1,1,1)
+    print("\nWithout removing features, Feature set "+str(currFeatures)+ " accuracy is "+str(accuracy)+"%")
+    highestAccuracy=accuracy
+    bestFeatures=currFeatures.copy()
+    
+    for i in range(data-1):
+        print("")
+
+        lowestAccuracy=101
+        for j in range(len(currFeatures)):
+            accuracy=leave_one_out_cross_validation(1,1,1)
+            print(" Removing feature(s) {"+str(currFeatures[j])+"} accuracy is "+str(accuracy)+"%")
+            if(accuracy<lowestAccuracy):
+                lowestAccuracy=accuracy
+                lowestAccuracyPos=j
+            elif(accuracy>highestAccuracy):
+                highestAccuracy=accuracy
+                highestAccuracyPos=j
+                bestFeatures=currFeatures.copy()
+                bestFeatures.pop(highestAccuracyPos)
+        currFeatures.pop(lowestAccuracyPos)
+        print("\nFeature set "+str(currFeatures)+" was the worst, accuracy is "+str(lowestAccuracy)+"%")
+
+    print("\nFinished search!! The best subset is "+str(bestFeatures)+", which has an accuracy of "+str(highestAccuracy)+"%")
+    
 
 #reads a made up data file for right now
 data = pd.read_csv('data.txt', delimiter=' ', header=None) #this somehow still works with txt files lol
@@ -55,4 +82,5 @@ if algorithm_selection == "1":
     forward_selection(data)
 
 else:
-    backward_selection(data)
+    #backward_selection(data)
+    backward_selection(int(inp))
