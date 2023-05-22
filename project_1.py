@@ -1,12 +1,10 @@
-
-
 #Student IDs:
-#Ailan Hernandez: 86
+#Ailan Hernandez: 862267773
 #Melissa Hidalgo: 862211556
 #Lucyann Lacdan: 862132856
-#Malina Martinez: 
+#Malina Martinez: 862311483
 #
-#Operations;
+#Operations:
 #    move a tile up
 #    move a tile down
 #    move  a tile right
@@ -255,7 +253,7 @@ inp1 = input("Please select which puzzle you'd like to solve: ")
 puzzle = []
 
 if inp1 == "2":
-    print("Please use a 0 for the blank space in th puzzle and use spaces in between numbers")
+    print("Please use a 0 for the blank space in the puzzle and use spaces in between numbers")
     top = list(map(int, input("Please enter the top row of your puzzle: ").strip().split()))
     middle = list(map(int, input("Please enter the middle row of your puzzle: ").strip().split()))
     bottom = list(map(int, input("Please enter the bottom row of your puzzle: ").strip().split()))
@@ -267,7 +265,9 @@ if inp1 == "2":
         i += 1
 
     print("Here's your puzzle: ")
-    print(puzzle)
+    print(puzzle[0], puzzle[1], puzzle[2])
+    print(puzzle[3], puzzle[4], puzzle[5])
+    print(puzzle[6], puzzle[7], puzzle[8])
 
 print("Search algorithms:")
 print("1. Uniform Cost Search")
