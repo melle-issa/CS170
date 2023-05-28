@@ -14,6 +14,7 @@ import numpy as np
 
 class Classifier:
     def train(self, training_data_loc):
+        #used https://www.geeksforgeeks.org/how-to-read-text-files-with-pandas/ for the following line
         training = pd.read_csv(training_data_loc, delimiter='\s{1,2}', header=None, engine='python', skipinitialspace=True)
         training = training.rename(columns={0: "label"})
         return training
@@ -25,9 +26,11 @@ class Classifier:
         temp_columns = ['label']
         for feature in features:
             temp_columns.append(feature)
-        temp_training = training[temp_columns]# training[temp_columns] = training[label, 1, 2, 3] for example
-        temp_instance = [instance[i-1] for i in features]
-
+        temp_training = training[temp_columns] #training[temp_columns] = training[label, 1, 2, 3] for example
+        temp_instance = [] #[1,2,3] == [0,1,2]
+        for feature in features:
+            temp_instance.append(instance[feature-1])
+        
         for _, item in temp_training.iterrows():
             distance = self.compute_euclidean_distance(np.array(item), temp_instance)
             if distance < min_dist:
