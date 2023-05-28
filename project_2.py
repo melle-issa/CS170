@@ -7,8 +7,42 @@
 #from numba import njit
 import random
 import pandas as pd
+import math
+import numpy as np
 
 #@njit
+
+class Classifier:
+    def train(self, training_data_loc):
+        training = pd.read_csv(training_data_loc, delimiter='\s{1,2}', header=None, engine='python', skipinitialspace=True)
+        training = training.rename(columns={0: "label"})
+        return training
+
+    def test(self, instance, features, training):
+        min_dist = math.inf
+        label = None
+
+        temp_columns = ['label']
+        for feature in features:
+            temp_columns.append(feature)
+        temp_training = training[temp_columns]# training[temp_columns] = training[label, 1, 2, 3] for example
+        temp_instance = [instance[i-1] for i in features]
+
+        for _, item in temp_training.iterrows():
+            distance = self.compute_euclidean_distance(np.array(item), temp_instance)
+            if distance < min_dist:
+                min_dist = distance
+                label = item['label']
+
+        return label
+
+    def compute_euclidean_distance(self, test_features, instance_features):
+        temp_dist = 0.0
+        test_features = test_features[1:]
+        for i in range(len(test_features)):
+            temp_dist += (float(test_features[i]) - instance_features[i])**2
+        return math.sqrt(temp_dist)
+
 
 def leave_one_out_cross_validation(data, current_features, feature_to_add):
     #For right now, returns a random number
@@ -86,18 +120,27 @@ def backward_selection(data):
     
 
 #reads a made up data file for right now
-data = pd.read_csv('data.txt', delimiter=' ', header=None) #this somehow still works with txt files lol
-data = data.rename(columns={0: "label"})
+# data = pd.read_csv('data.txt', delimiter=' ', header=None) #this somehow still works with txt files lol
+# data = data.rename(columns={0: "label"})
 
-print("Welcome to our Feature Selection Algorithm!\n")
-inp = input("Please enter the total number of features: ")
-print("\n1. Forward Selection")
-print("2. Backward Selection")
-algorithm_selection = input("\nPlease select an algorithm to run: ")
+# print("Welcome to our Feature Selection Algorithm!\n")
+# inp = input("Please enter the total number of features: ")
+# print("\n1. Forward Selection")
+# print("2. Backward Selection")
+# algorithm_selection = input("\nPlease select an algorithm to run: ")
 
-if algorithm_selection == "1":
-    forward_selection(int(inp), data)
+# if algorithm_selection == "1":
+#     forward_selection(int(inp), data)
 
-else:
-    #backward_selection(data)
-    backward_selection(int(inp))
+# else:
+#     #backward_selection(data)
+#     backward_selection(int(inp))
+
+#2.0000000e+000  3.7256854e+000  1.8995100e+000  4.0813166e+000  1.8676158e+000  3.2975607e+000  1.0805679e+000  2.7805422e+000  4.3284038e+000  2.7017165e+000  4.7808253e+000
+
+classify = Classifier()
+training_set = classify.train('small-test-dataset.txt')
+testing_instance = [3.7256855e+000,  1.8995100e+000,  4.0813166e+000,  1.8676158e+000,  3.2975607e+000,  1.0805679e+000,  2.7805422e+000,  4.3284038e+000,  2.7017165e+000,  4.7808253e+000]
+features = [1, 2, 3]
+classification = classify.test(testing_instance, features, training_set)
+print(classification)
