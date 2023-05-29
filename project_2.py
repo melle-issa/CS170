@@ -29,7 +29,8 @@ class Classifier:
         temp_training = training[temp_columns] #training[temp_columns] = training[label, 1, 2, 3] for example
         temp_instance = [] #[1,2,3] == [0,1,2]
         for feature in features:
-            temp_instance.append(instance[feature-1])
+            #temp_instance.append(instance[feature-1])
+            temp_instance.append(instance[feature])
         
         for _, item in temp_training.iterrows():
             distance = self.compute_euclidean_distance(np.array(item), temp_instance)
@@ -45,6 +46,23 @@ class Classifier:
         for i in range(len(test_features)):
             temp_dist += (float(test_features[i]) - instance_features[i])**2
         return math.sqrt(temp_dist)
+
+
+class Validator:
+    def leave_one_out_validation(data, features):
+        numCorrect=0
+        for i in range(len(data)):
+            testingData=data.copy()
+            testing_instance=testingData.iloc[i].values
+            testingData = testingData.drop(testingData.index[i])
+            classificationTest = classify.test(testing_instance, features, testingData)
+            classificationActual = classify.test(testing_instance, features, data)
+            if(classificationActual==classificationTest):
+                numCorrect=numCorrect+1
+        return numCorrect/(len(data))
+            
+
+        
 
 
 def leave_one_out_cross_validation(data, current_features, feature_to_add):
@@ -147,3 +165,13 @@ testing_instance = [3.7256855e+000,  1.8995100e+000,  4.0813166e+000,  1.8676158
 features = [1, 2, 3]
 classification = classify.test(testing_instance, features, training_set)
 print(classification)
+
+
+features = [3, 5, 7]
+accuracy=Validator.leave_one_out_validation(training_set,features)
+print(f"Accuracy with features {', '.join(map(str, features))}: {accuracy}")
+
+#big_training_set = classify.train('large-test-dataset-1.txt')
+#features = [1, 15, 27]
+#accuracy=Validator.leave_one_out_validation(big_training_set,features)
+#print(f"Accuracy with features {', '.join(map(str, features))}: {accuracy}")
