@@ -1,0 +1,95 @@
+Welcome to our Feature Selection Algorithm!
+
+
+1. Forward Selection
+2. Backward Selection
+
+Please select an algorithm to run: 1
+
+Beginning search
+
+ Using feature(s)  [1]  accuracy is  84.0 %
+ Using feature(s)  [2]  accuracy is  82.0 %
+ Using feature(s)  [3]  accuracy is  90.0 %
+ Using feature(s)  [4]  accuracy is  79.0 %
+ Using feature(s)  [5]  accuracy is  82.0 %
+ Using feature(s)  [6]  accuracy is  90.0 %
+ Using feature(s)  [7]  accuracy is  87.0 %
+ Using feature(s)  [8]  accuracy is  79.0 %
+ Using feature(s)  [9]  accuracy is  79.0 %
+ Using feature(s)  [10]  accuracy is  80.0 %
+
+Feature set  [3]  was best with an accuracy of  90.0 %
+ Using feature(s)  [3, 1]  accuracy is  91.0 %
+ Using feature(s)  [3, 2]  accuracy is  93.0 %
+ Using feature(s)  [3, 4]  accuracy is  97.0 %
+ Using feature(s)  [3, 5]  accuracy is  87.0 %
+ Using feature(s)  [3, 6]  accuracy is  92.0 %
+ Using feature(s)  [3, 7]  accuracy is  89.0 %
+ Using feature(s)  [3, 8]  accuracy is  89.0 %
+ Using feature(s)  [3, 9]  accuracy is  86.0 %
+ Using feature(s)  [3, 10]  accuracy is  96.0 %
+
+Feature set  [3, 4]  was best with an accuracy of  97.0 %
+ Using feature(s)  [3, 4, 1]  accuracy is  90.0 %
+ Using feature(s)  [3, 4, 2]  accuracy is  91.0 %
+ Using feature(s)  [3, 4, 5]  accuracy is  94.0 %
+ Using feature(s)  [3, 4, 6]  accuracy is  91.0 %
+ Using feature(s)  [3, 4, 7]  accuracy is  88.0 %
+ Using feature(s)  [3, 4, 8]  accuracy is  86.0 %
+ Using feature(s)  [3, 4, 9]  accuracy is  87.0 %
+ Using feature(s)  [3, 4, 10]  accuracy is  93.0 %
+
+Feature set  [3, 4, 5]  was best with an accuracy of  94.0 %
+(Warning. Accuracy has decreased!)
+ Using feature(s)  [3, 4, 5, 1]  accuracy is  89.0 %
+ Using feature(s)  [3, 4, 5, 2]  accuracy is  88.0 %
+ Using feature(s)  [3, 4, 5, 6]  accuracy is  88.0 %
+ Using feature(s)  [3, 4, 5, 7]  accuracy is  90.0 %
+ Using feature(s)  [3, 4, 5, 8]  accuracy is  80.0 %
+ Using feature(s)  [3, 4, 5, 9]  accuracy is  87.0 %
+ Using feature(s)  [3, 4, 5, 10]  accuracy is  85.0 %
+
+Feature set  [3, 4, 5, 7]  was best with an accuracy of  90.0 %
+(Warning. Accuracy has decreased!)
+ Using feature(s)  [3, 4, 5, 7, 1]  accuracy is  84.0 %
+ Using feature(s)  [3, 4, 5, 7, 2]  accuracy is  92.0 %
+ Using feature(s)  [3, 4, 5, 7, 6]  accuracy is  89.0 %
+ Using feature(s)  [3, 4, 5, 7, 8]  accuracy is  86.0 %
+ Using feature(s)  [3, 4, 5, 7, 9]  accuracy is  89.0 %
+ Using feature(s)  [3, 4, 5, 7, 10]  accuracy is  83.0 %
+
+Feature set  [3, 4, 5, 7, 2]  was best with an accuracy of  92.0 %
+(Warning. Accuracy has decreased!)
+ Using feature(s)  [3, 4, 5, 7, 2, 1]  accuracy is  84.0 %
+ Using feature(s)  [3, 4, 5, 7, 2, 6]  accuracy is  87.0 %
+ Using feature(s)  [3, 4, 5, 7, 2, 8]  accuracy is  86.0 %
+ Using feature(s)  [3, 4, 5, 7, 2, 9]  accuracy is  85.0 %
+ Using feature(s)  [3, 4, 5, 7, 2, 10]  accuracy is  88.0 %
+
+Feature set  [3, 4, 5, 7, 2, 10]  was best with an accuracy of  88.0 %
+(Warning. Accuracy has decreased!)
+ Using feature(s)  [3, 4, 5, 7, 2, 10, 1]  accuracy is  85.0 %
+ Using feature(s)  [3, 4, 5, 7, 2, 10, 6]  accuracy is  86.0 %
+ Using feature(s)  [3, 4, 5, 7, 2, 10, 8]  accuracy is  86.0 %
+ Using feature(s)  [3, 4, 5, 7, 2, 10, 9]  accuracy is  84.0 %
+
+Feature set  [3, 4, 5, 7, 2, 10, 6]  was best with an accuracy of  86.0 %
+(Warning. Accuracy has decreased!)
+ Using feature(s)  [3, 4, 5, 7, 2, 10, 6, 1]  accuracy is  82.0 %
+ Using feature(s)  [3, 4, 5, 7, 2, 10, 6, 8]  accuracy is  83.0 %
+ Using feature(s)  [3, 4, 5, 7, 2, 10, 6, 9]  accuracy is  82.0 %
+
+Feature set  [3, 4, 5, 7, 2, 10, 6, 8]  was best with an accuracy of  83.0 %
+(Warning. Accuracy has decreased!)
+ Using feature(s)  [3, 4, 5, 7, 2, 10, 6, 8, 1]  accuracy is  79.0 %
+ Using feature(s)  [3, 4, 5, 7, 2, 10, 6, 8, 9]  accuracy is  81.0 %
+
+Feature set  [3, 4, 5, 7, 2, 10, 6, 8, 9]  was best with an accuracy of  81.0 %
+(Warning. Accuracy has decreased!)
+ Using feature(s)  [3, 4, 5, 7, 2, 10, 6, 8, 9, 1]  accuracy is  79.0 %
+
+Feature set  [3, 4, 5, 7, 2, 10, 6, 8, 9, 1]  was best with an accuracy of  79.0 %
+(Warning. Accuracy has decreased!)
+
+Finished search!! The best subset is  [3, 4] , which has an accuracy of  97.0 %
