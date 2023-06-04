@@ -108,7 +108,8 @@ def backward_selection(data, training_set):
 
         lowestAccuracy=101
         for j in range(len(currFeatures)):
-            accuracy=Validator().leave_one_out_validation(training_copy, currFeatures)
+            features_without_j = currFeatures[:j] + currFeatures[j+1:]
+            accuracy = Validator().leave_one_out_validation(training_copy, features_without_j)
             print(" Removing feature(s) {"+str(currFeatures[j])+"} accuracy is ", accuracy * 100, "%")
             if(accuracy<lowestAccuracy):
                 lowestAccuracy=accuracy
