@@ -16,7 +16,7 @@ class Classifier:
     
     def train(self, training_data_loc):
         #used https://www.geeksforgeeks.org/how-to-read-text-files-with-pandas/ for the following line
-        training = pd.read_csv(training_data_loc, delimiter='\s{1,2}', header=None, engine='python', skipinitialspace=True)
+        training = pd.read_csv(training_data_loc, delimiter='\s{2,3}', header=None, engine='python', skipinitialspace=True)
         training = training.rename(columns={0: "label"})
 
         normalized_training = self.normalize_data(training.drop(columns=['label']))
