@@ -9,11 +9,23 @@ import math
 import numpy as np
 
 class Classifier:
+    # used https://stackoverflow.com/questions/26414913/normalize-columns-of-a-dataframe for this function
+    def normalize_data(self, data):
+        normalized_data = (data - data.min()) / (data.max() - data.min())
+        return normalized_data
+    
     def train(self, training_data_loc):
         #used https://www.geeksforgeeks.org/how-to-read-text-files-with-pandas/ for the following line
-        training = pd.read_csv(training_data_loc, delimiter='\s{2,3}', header=None, engine='python', skipinitialspace=True)
+        training = pd.read_csv(training_data_loc, delimiter='\s{1,2}', header=None, engine='python', skipinitialspace=True)
         training = training.rename(columns={0: "label"})
-        return training
+
+        normalized_training = self.normalize_data(training.drop(columns=['label']))
+        normalized_training['label'] = training['label']
+        columns = list(normalized_training.columns)
+        column_index = columns.index('label')
+        columns = [columns[column_index]] + columns[:column_index] + columns[column_index+1:]
+        return_df = normalized_training[columns]
+        return return_df
 
     def test(self, instance, features, training):
         min_dist = math.inf
@@ -91,7 +103,7 @@ def forward_selection(num_features, training_set):
 
     print("\nFinished search!! The best subset is ", str(final_features), ", which has an accuracy of ", best_accuracy*100, "%")
 
-def backward_selection(data, training_set):
+def backward_elimination(data, training_set):
     training_copy = training_set.copy()
     print("Beginning search")
     currFeatures = []
@@ -136,7 +148,7 @@ inp = "Small_data__52.txt" #input("Please enter the name of the text file (inclu
 data = Classifier().train(inp)
 
 print("\n1. Forward Selection")
-print("2. Backward Selection")
+print("2. Backward Elimination")
 algorithm_selection = input("\nPlease select an algorithm to run: ")
 
 num_features = len(data.columns) - 1
@@ -145,4 +157,4 @@ if algorithm_selection == "1":
     forward_selection(num_features, data)
 
 else:
-    backward_selection(num_features, data)
+    backward_elimination(num_features, data)
